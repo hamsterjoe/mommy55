@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f3f0">
+  <title>A Birthday Wish for Mummy</title>
+  <style>
+    :root{--ink:#263552;--blue:#799acb;--deep:#45699d;--cream:#fffaf6;--pink:#df8d9b;--gold:#d4ad69}
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;font-family:Georgia,'Times New Roman',serif;color:var(--ink)}
+    body{background:var(--cream);overflow:hidden} button{font:inherit;color:inherit}
+    .scene{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;opacity:0;visibility:hidden;transition:opacity .8s ease,visibility .8s}
+    .scene.active{opacity:1;visibility:visible}
+    .intro{background:radial-gradient(ellipse at 50% 45%,#fff 0%,#faf3ef 65%,#f3e9e5 100%)}
+    .intro-content{text-align:center;position:relative;z-index:2;padding:24px;animation:arrive 1.1s both;display:flex;min-height:100svh;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+    .eyebrow{font:600 .72rem/1.4 system-ui,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#a07b77}
+    .intro-title{font-size:clamp(2.2rem,6vw,3.5rem);font-weight:400;letter-spacing:.01em;text-transform:none;color:var(--ink);margin:.55em 0}
+    h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:400;margin:.55em 0 .3em}
+    .hint{font:1rem/1.6 system-ui,sans-serif;color:#777782}
+    .envelope-button{border:0;background:none;cursor:pointer;display:block;margin:0 auto;padding:14px;filter:drop-shadow(0 18px 20px #65534b25);animation:float 3.6s ease-in-out infinite}
+    .envelope-image{display:block;width:min(500px,72vw);height:auto;mix-blend-mode:multiply;animation:pulse 2.8s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+    .envelope{width:min(280px,68vw);aspect-ratio:1.48;position:relative;background:#e4c7c1;border-radius:4px;box-shadow:inset 0 0 0 1px #d4b1aa}
+    .envelope:before,.envelope:after{content:"";position:absolute;inset:0}
+    .envelope:before{background:linear-gradient(145deg,transparent 49.5%,#d5b2ac 50%) left/50% 100% no-repeat,linear-gradient(215deg,transparent 49.5%,#d9b8b1 50%) right/50% 100% no-repeat;z-index:2}
+    .envelope:after{background:linear-gradient(35deg,transparent 49%,#ebd3ce 50%) left bottom/50% 76% no-repeat,linear-gradient(-35deg,transparent 49%,#ebd3ce 50%) right bottom/50% 76% no-repeat;z-index:3}
+    .flap{position:absolute;inset:0;background:#eddbd6;clip-path:polygon(0 0,100% 0,50% 60%);z-index:4;transform-origin:top;transition:transform .55s ease}
+    .seal{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);z-index:5;color:#fff;font:1.8rem/1 system-ui;background:var(--pink);width:52px;height:52px;display:grid;place-items:center;clip-path:path('M26 48 C22 43 3 32 3 17 C3 2 21 -2 26 10 C32 -2 49 2 49 17 C49 32 31 43 26 48');filter:drop-shadow(0 3px 2px #8e596050)}
+    .envelope-button:hover .flap,.envelope-button:focus-visible .flap{transform:rotateX(35deg)}
+    .envelope-button:focus-visible{outline:2px solid var(--deep);outline-offset:4px;border-radius:8px}
+    .blossom{position:absolute;z-index:1;left:50%;top:50%;pointer-events:none;font-size:var(--size);opacity:0;animation:blossom var(--duration) cubic-bezier(.12,.66,.24,1) forwards;filter:drop-shadow(0 4px 5px #5b4b4b20)}
+    @keyframes blossom{0%{opacity:0;transform:translate(-50%,-50%) scale(.25) rotate(0)}12%{opacity:1}78%{opacity:.95}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1.12) rotate(var(--rot))}}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+    @keyframes arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .cake-scene{background:radial-gradient(ellipse at 50% 45%,#ffe0e8 0%,#fff0f3 35%,#fff8f6 70%,#f3e9e8 100%)}
+    .cake-wrap{text-align:center;width:min(620px,96vw);padding:20px;position:relative;z-index:2}
+    .cake-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:400;margin:0 0 8px}
+    .cake-subtitle{font:1rem/1.5 system-ui,sans-serif;color:#777782;margin:0 0 25px}
+    .cake{width:min(430px,82vw);aspect-ratio:1086/1448;height:auto;position:relative;margin:0 auto 8px;filter:drop-shadow(0 18px 13px #455b7620)}
+    .cake-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+    .number-candles{position:absolute;z-index:6;bottom:70%;left:50%;transform:translateX(-50%);display:flex;gap:9px;align-items:end}
+    .num-candle{font:bold clamp(58px,13vw,82px)/1 system-ui,sans-serif;letter-spacing:-.11em;color:#c52f62;background:linear-gradient(110deg,#f57a9e 0%,#d83b70 38%,#a51c4c 78%,#e7537d 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:1px 1px 0 #ad2853,2px 2px 0 #971d48,3px 3px 0 #7e173f,4px 5px 7px #74384c70;position:relative;padding-right:8px;filter:drop-shadow(0 3px 3px #84375055)}
+    .flame{position:absolute;width:13px;height:20px;left:44%;top:-20px;background:radial-gradient(ellipse at 50% 68%,#fff2a6 0 23%,#ffb952 25% 55%,#ef7652 57% 100%);border-radius:55% 45% 55% 45%;transform:rotate(4deg);animation:flicker .8s ease-in-out infinite alternate;box-shadow:0 0 17px 5px #ffc96570}
+    .num-candle:nth-child(2) .flame{animation-delay:.3s}
+    .regular-candles{position:absolute;z-index:5;bottom:69%;left:50%;width:52%;height:52px;transform:translateX(-50%);display:flex;justify-content:space-between;align-items:end}
+    .candle-group{display:flex;gap:12px;align-items:end}
+    .stick{width:10px;height:45px;border-radius:4px;background:linear-gradient(90deg,#e29da4,#fff0e7 34%,#f7c4ba 68%,#bd7780);box-shadow:1px 2px 3px #72505a40;position:relative}
+    .stick:nth-child(2){height:53px}.stick:nth-child(3){height:42px}
+    .stick:before{content:"";position:absolute;width:12px;height:18px;left:-1px;top:-16px;background:radial-gradient(ellipse at 50% 72%,#fffad0 0 18%,#ffcb68 38%,#f07849 72%);border-radius:52% 48% 55% 45%;filter:drop-shadow(0 0 5px #ffc968);animation:flicker .7s ease-in-out infinite alternate}
+    @keyframes flicker{to{transform:rotate(-7deg) scale(.86);opacity:.82}}
+    .candle-glow{position:absolute;inset:0;transition:opacity .7s}
+    .cake.blown .flame,.cake.blown .stick:before{opacity:0;transform:scale(.1) translateY(10px);animation:none}
+    .cake.blown .candle-glow{opacity:0}
+    .controls{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+    .pill{border:1px solid #b8c7d9;background:#fff;color:#456184;border-radius:30px;padding:11px 19px;font:600 .9rem system-ui,sans-serif;cursor:pointer;transition:transform .2s,background .2s}
+    .pill:hover{transform:translateY(-2px);background:#f3f7fc}.pill.primary{background:#526f9d;color:white;border-color:#526f9d}
+    .mic-status{font: .82rem system-ui,sans-serif;color:#747985;min-height:1.4em;margin:10px 0 0}
+    .end-button{opacity:0;pointer-events:none;transition:opacity .5s;margin-top:4px}.end-button.ready{opacity:1;pointer-events:auto}
+    .final-scene{background:#fffdfb;text-align:center;z-index:10}
+    .final-content{max-width:760px;padding:clamp(32px,6vw,58px) clamp(28px,7vw,76px);position:relative;z-index:2;animation:arrive 1.2s both;background:linear-gradient(135deg,#ffffffb8,#fffaf6a6);border:1px solid #ffffffd9;border-radius:28px;box-shadow:0 24px 70px #7c46521c,inset 0 1px #ffffffcc;backdrop-filter:blur(16px) saturate(1.18);-webkit-backdrop-filter:blur(16px) saturate(1.18)}
+    .heart-cloud{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+    .bg-heart{position:absolute;left:var(--left);top:var(--top);font-family:system-ui,sans-serif;font-size:var(--size);line-height:1;color:var(--heart);opacity:.2;transform:rotate(var(--tilt));animation:heart-dance var(--speed) ease-in-out infinite;animation-delay:var(--delay);text-shadow:0 5px 12px #b94d5b20}
+    @keyframes heart-dance{0%,100%{transform:rotate(var(--tilt)) scale(.95)}45%{transform:rotate(var(--tilt)) scale(1.13)}}
+    .final-content h2{font-size:clamp(2.5rem,8vw,5.5rem);font-weight:400;line-height:1.05;margin:0 0 24px;color:#456184}
+    .final-content p{font-size:clamp(1.1rem,2.6vw,1.45rem);line-height:1.8;margin:0;color:#686979}
+    .white-wave{position:fixed;z-index:9;left:50%;top:50%;width:0;height:0;border-radius:50%;background:#fff;transform:translate(-50%,-50%);pointer-events:none}
+    .white-wave.go{animation:expand 1.25s cubic-bezier(.2,.75,.25,1) forwards}
+    @keyframes expand{to{width:260vmax;height:260vmax}}
+    .petal{position:absolute;color:var(--pink);font-size:20px;opacity:0;animation:drift 7s linear infinite;pointer-events:none}
+    @keyframes drift{0%{transform:translateY(20px) rotate(0);opacity:0}15%{opacity:.45}90%{opacity:.3}100%{transform:translateY(-105vh) rotate(300deg);opacity:0}}
+    @media(max-height:700px){.cake{transform:scale(.8);transform-origin:top center;height:280px;margin-bottom:-35px}.cake-title{font-size:2rem}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body>
+  <main>
+    <section class="scene intro active" id="intro" aria-label="Birthday invitation">
+      <div class="intro-content">
+        <h1 class="intro-title">For Mummy</h1>
+        <button class="envelope-button" id="openLetter" aria-label="Open the birthday envelope">
+          <img class="envelope-image" src="snoopy-envelope.png" alt="A Snoopy birthday envelope">
+        </button>
+        <div class="eyebrow">From Joe Yue</div>
+      </div>
+    </section>
+    <section class="scene cake-scene" id="cakeScene" aria-label="Make a birthday wish">
+      <div class="cake-wrap">
+        <h2 class="cake-title">Make a wish and blow out your candles</h2>
+        <div class="cake" id="cake" aria-label="A blue and white birthday cake with 55 candles">
+          <img class="cake-image" src="cake.png" alt="A two-tier white and blue birthday cake">
+          <div class="number-candles"><span class="num-candle">5<i class="flame"></i></span><span class="num-candle">5<i class="flame"></i></span></div>
+          <div class="regular-candles" aria-hidden="true"><span class="candle-group"><i class="stick"></i><i class="stick"></i><i class="stick"></i></span><span class="candle-group"><i class="stick"></i><i class="stick"></i><i class="stick"></i></span></div>
+          <div class="candle-glow"></div>
+        </div>
+        <div class="controls"><button class="pill primary" id="micButton">I'm ready!</button></div>
+        <p class="mic-status" id="status" aria-live="polite"></p>
+      </div>
+    </section>
+    <section class="scene final-scene" id="finalScene" aria-label="Birthday message">
+      <div class="heart-cloud" id="heartCloud" aria-hidden="true"></div>
+      <div class="final-content"><div class="eyebrow">Today is your special day</div><h2>Happy Birthday Mummy</h2><p>Thank you for being such a loving mother and caring for all of us every single day. I love you.</p></div>
+    </section>
+  </main>
+  <div class="white-wave" id="wave" aria-hidden="true"></div>
+  <script>
+    const intro=document.querySelector('#intro'), cakeScene=document.querySelector('#cakeScene'), finalScene=document.querySelector('#finalScene');
+    const flowers=['🌸','🌼','🌺','🌷','💐','🌻','🪷','🌹','✿','❀'];
+    let audioContext, analyser, micStream, listening=false, blown=false;
+    function bloom(){
+      const origin=document.querySelector('.envelope-image').getBoundingClientRect();
+      const cx=origin.left+origin.width/2, cy=origin.top+origin.height/2;
+      for(let i=0;i<68;i++){
+        const flower=document.createElement('span'); flower.className='blossom'; flower.textContent=flowers[Math.floor(Math.random()*flowers.length)];
+        flower.style.left=cx+'px'; flower.style.top=cy+'px'; flower.style.setProperty('--x',(Math.random()-.5)*innerWidth*1.2+'px'); flower.style.setProperty('--y',(Math.random()-.5)*innerHeight*1.15+'px');
+        flower.style.setProperty('--size',(16+Math.random()*31)+'px'); flower.style.setProperty('--duration',(2.2+Math.random()*2)+'s'); flower.style.setProperty('--rot',(Math.random()*700-350)+'deg'); document.body.append(flower); setTimeout(()=>flower.remove(),4500);
+      }
+      setTimeout(()=>{intro.classList.remove('active');cakeScene.classList.add('active')},3500);
+    }
+    document.querySelector('#openLetter').addEventListener('click',e=>{if(e.currentTarget.disabled)return;e.currentTarget.disabled=true;bloom()});
+    function extinguish(){if(blown)return;blown=true;document.querySelector('#cake').classList.add('blown');document.querySelector('#status').textContent='Wish made! Every candle is out. ✨';if(micStream)micStream.getTracks().forEach(t=>t.stop());listening=false;setTimeout(()=>{document.querySelector('#wave').classList.add('go');setTimeout(()=>{cakeScene.classList.remove('active');finalScene.classList.add('active');makePetals()},520)},1400)}
+    document.querySelector('#blowButton')?.addEventListener('click',extinguish);
+    document.querySelector('#micButton').addEventListener('click',async()=>{
+      if(blown)return;
+      if(!navigator.mediaDevices?.getUserMedia){document.querySelector('#status').textContent='Microphone is unavailable here. Tap the cake to blow out the candles.';return}
+      try{micStream=await navigator.mediaDevices.getUserMedia({audio:true});audioContext=new (window.AudioContext||window.webkitAudioContext)();const source=audioContext.createMediaStreamSource(micStream);analyser=audioContext.createAnalyser();analyser.fftSize=512;source.connect(analyser);listening=true;document.querySelector('#micButton').textContent='Listening…';detectSound()}
+      catch(err){document.querySelector('#status').textContent='Microphone permission was not granted. Tap the cake to blow out the candles.'}
+    });
+    function detectSound(){if(!listening||blown)return;const data=new Uint8Array(analyser.fftSize);analyser.getByteTimeDomainData(data);let sum=0;for(const v of data){const x=(v-128)/128;sum+=x*x}const rms=Math.sqrt(sum/data.length);if(rms>.105){extinguish();return}requestAnimationFrame(detectSound)}
+    document.querySelector('#cake').addEventListener('click',extinguish);
+    function makePetals(){const box=document.querySelector('#heartCloud'),colors=['#e77788','#d9576a','#f2a0a8','#c9485b','#ec8995','#b93650'];for(let i=0;i<32;i++){const heart=document.createElement('span');heart.className='bg-heart';heart.textContent='♥';heart.style.setProperty('--left',Math.random()*100+'%');heart.style.setProperty('--top',Math.random()*100+'%');heart.style.setProperty('--size',(22+Math.random()*74)+'px');heart.style.setProperty('--heart',colors[i%colors.length]);heart.style.setProperty('--tilt',(Math.random()*70-35)+'deg');heart.style.setProperty('--speed',(1.5+Math.random()*1.4)+'s');heart.style.setProperty('--delay',(Math.random()*-2.5)+'s');box.append(heart)}}
+  </script>
+</body>
+</html>
