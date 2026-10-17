@@ -57,7 +57,7 @@
     .mic-status{font: .82rem system-ui,sans-serif;color:#747985;min-height:1.4em;margin:10px 0 0}
     .end-button{opacity:0;pointer-events:none;transition:opacity .5s;margin-top:4px}.end-button.ready{opacity:1;pointer-events:auto}
     .final-scene{background:#fffdfb;text-align:center;z-index:10}
-    .final-content{max-width:760px;padding:clamp(32px,6vw,58px) clamp(28px,7vw,76px);position:relative;z-index:2;animation:arrive 1.2s both;background:linear-gradient(135deg,#ffffffb8,#fffaf6a6);border:1px solid #ffffffd9;border-radius:28px;box-shadow:0 24px 70px #7c46521c,inset 0 1px #ffffffcc;backdrop-filter:blur(16px) saturate(1.18);-webkit-backdrop-filter:blur(16px) saturate(1.18)}
+    .final-content{max-width:760px;padding:clamp(32px,6vw,58px) clamp(28px,7vw,76px);position:relative;z-index:2;animation:arrive 1.2s both;background:rgba(255,255,255,.14);border-radius:16px;box-shadow:0 4px 30px rgba(0,0,0,.1);backdrop-filter:blur(8.2px);-webkit-backdrop-filter:blur(8.2px);border:1px solid rgba(255,255,255,.19)}
     .heart-cloud{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
     .bg-heart{position:absolute;left:var(--left);top:var(--top);font-family:system-ui,sans-serif;font-size:var(--size);line-height:1;color:var(--heart);opacity:.2;transform:rotate(var(--tilt));animation:heart-dance var(--speed) ease-in-out infinite;animation-delay:var(--delay);text-shadow:0 5px 12px #b94d5b20}
     @keyframes heart-dance{0%,100%{transform:rotate(var(--tilt)) scale(.95)}45%{transform:rotate(var(--tilt)) scale(1.13)}}
