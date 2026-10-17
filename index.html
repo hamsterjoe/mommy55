@@ -18,8 +18,11 @@
     h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:400;margin:.55em 0 .3em}
     .hint{font:1rem/1.6 system-ui,sans-serif;color:#777782}
     .envelope-button{border:0;background:none;cursor:pointer;display:block;margin:0 auto;padding:14px;filter:drop-shadow(0 18px 20px #65534b25);animation:float 3.6s ease-in-out infinite}
+    .envelope-button.opening{animation:letter-open .8s cubic-bezier(.2,.8,.25,1) forwards;pointer-events:none}
+    .envelope-button.opening .envelope-image{animation:none}
     .envelope-image{display:block;width:min(500px,72vw);height:auto;mix-blend-mode:multiply;animation:pulse 2.8s ease-in-out infinite}
     @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
+    @keyframes letter-open{0%{transform:translateY(0) scale(1)}28%{transform:translateY(8px) scale(.94)}65%{transform:translateY(-8px) scale(1.04)}100%{transform:translateY(-32px) scale(.88);opacity:.25}}
     .envelope{width:min(280px,68vw);aspect-ratio:1.48;position:relative;background:#e4c7c1;border-radius:4px;box-shadow:inset 0 0 0 1px #d4b1aa}
     .envelope:before,.envelope:after{content:"";position:absolute;inset:0}
     .envelope:before{background:linear-gradient(145deg,transparent 49.5%,#d5b2ac 50%) left/50% 100% no-repeat,linear-gradient(215deg,transparent 49.5%,#d9b8b1 50%) right/50% 100% no-repeat;z-index:2}
@@ -34,6 +37,8 @@
     @keyframes arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
     .cake-scene{background:radial-gradient(ellipse at 50% 45%,#ffe0e8 0%,#fff0f3 35%,#fff8f6 70%,#f3e9e8 100%)}
     .cake-wrap{text-align:center;width:min(620px,96vw);padding:20px;position:relative;z-index:2}
+    .cake-scene.active .cake-wrap{animation:cake-arrive 1.15s cubic-bezier(.18,.72,.25,1) both}
+    @keyframes cake-arrive{from{opacity:0;transform:translateY(35px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
     .cake-title{font-size:clamp(1.8rem,5vw,3rem);font-weight:400;margin:0 0 8px}
     .cake-subtitle{font:1rem/1.5 system-ui,sans-serif;color:#777782;margin:0 0 25px}
     .cake{width:min(430px,82vw);aspect-ratio:1086/1448;height:auto;position:relative;margin:0 auto 8px;filter:drop-shadow(0 18px 13px #455b7620)}
@@ -41,19 +46,27 @@
     .number-candles{position:absolute;z-index:6;bottom:70%;left:50%;transform:translateX(-50%);display:flex;gap:9px;align-items:end}
     .num-candle{font:bold clamp(58px,13vw,82px)/1 system-ui,sans-serif;letter-spacing:-.11em;color:#c52f62;background:linear-gradient(110deg,#f57a9e 0%,#d83b70 38%,#a51c4c 78%,#e7537d 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:1px 1px 0 #ad2853,2px 2px 0 #971d48,3px 3px 0 #7e173f,4px 5px 7px #74384c70;position:relative;padding-right:8px;filter:drop-shadow(0 3px 3px #84375055)}
     .flame{position:absolute;width:13px;height:20px;left:44%;top:-20px;background:radial-gradient(ellipse at 50% 68%,#fff2a6 0 23%,#ffb952 25% 55%,#ef7652 57% 100%);border-radius:55% 45% 55% 45%;transform:rotate(4deg);animation:flicker .8s ease-in-out infinite alternate;box-shadow:0 0 17px 5px #ffc96570}
+    .flame:after,.stick:after{content:"";position:absolute;left:3px;top:-17px;width:8px;height:20px;border-radius:50%;background:linear-gradient(90deg,transparent,#b9aeb5aa,transparent);filter:blur(2px);opacity:0}
     .num-candle:nth-child(2) .flame{animation-delay:.3s}
     .regular-candles{position:absolute;z-index:5;bottom:69%;left:50%;width:52%;height:52px;transform:translateX(-50%);display:flex;justify-content:space-between;align-items:end}
     .candle-group{display:flex;gap:12px;align-items:end}
     .stick{width:10px;height:45px;border-radius:4px;background:linear-gradient(90deg,#e29da4,#fff0e7 34%,#f7c4ba 68%,#bd7780);box-shadow:1px 2px 3px #72505a40;position:relative}
     .stick:nth-child(2){height:53px}.stick:nth-child(3){height:42px}
     .stick:before{content:"";position:absolute;width:12px;height:18px;left:-1px;top:-16px;background:radial-gradient(ellipse at 50% 72%,#fffad0 0 18%,#ffcb68 38%,#f07849 72%);border-radius:52% 48% 55% 45%;filter:drop-shadow(0 0 5px #ffc968);animation:flicker .7s ease-in-out infinite alternate}
+    .stick:after{left:0;top:-20px}
     @keyframes flicker{to{transform:rotate(-7deg) scale(.86);opacity:.82}}
+    @keyframes blow-out{to{opacity:0;transform:translateY(9px) scale(.2)}}
+    @keyframes smoke-rise{0%{opacity:0;transform:translateY(0) scale(.7)}24%{opacity:.6}100%{opacity:0;transform:translateY(-25px) scale(1.4)}}
     .candle-glow{position:absolute;inset:0;transition:opacity .7s}
-    .cake.blown .flame,.cake.blown .stick:before{opacity:0;transform:scale(.1) translateY(10px);animation:none}
+    .cake.blown .flame,.cake.blown .stick:before{animation:blow-out .38s ease-out var(--delay,0s) forwards}
+    .cake.blown .flame:after,.cake.blown .stick:after{animation:smoke-rise .9s ease-out calc(var(--delay,0s) + .2s) forwards}
     .cake.blown .candle-glow{opacity:0}
     .controls{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
     .pill{border:1px solid #b8c7d9;background:#fff;color:#456184;border-radius:30px;padding:11px 19px;font:600 .9rem system-ui,sans-serif;cursor:pointer;transition:transform .2s,background .2s}
     .pill:hover{transform:translateY(-2px);background:#f3f7fc}.pill.primary{background:#526f9d;color:white;border-color:#526f9d}
+    .pill.primary.listening{animation:listen-pulse 1.5s ease-in-out infinite}
+    .pill.primary.listening:before{content:"";display:inline-block;width:8px;height:8px;margin-right:9px;border-radius:50%;background:#b8edc4;box-shadow:0 0 10px #b8edc4;vertical-align:1px}
+    @keyframes listen-pulse{50%{box-shadow:0 0 0 7px #526f9d20,0 0 25px #819bc7}}
     .mic-status{font: .82rem system-ui,sans-serif;color:#747985;min-height:1.4em;margin:10px 0 0}
     .end-button{opacity:0;pointer-events:none;transition:opacity .5s;margin-top:4px}.end-button.ready{opacity:1;pointer-events:auto}
     .final-scene{background:#fffdfb;text-align:center;z-index:10}
@@ -69,7 +82,7 @@
     .petal{position:absolute;color:var(--pink);font-size:20px;opacity:0;animation:drift 7s linear infinite;pointer-events:none}
     @keyframes drift{0%{transform:translateY(20px) rotate(0);opacity:0}15%{opacity:.45}90%{opacity:.3}100%{transform:translateY(-105vh) rotate(300deg);opacity:0}}
     @media(max-height:700px){.cake{transform:scale(.8);transform-origin:top center;height:280px;margin-bottom:-35px}.cake-title{font-size:2rem}}
-    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.cake.blown .flame,.cake.blown .stick:before,.cake.blown .flame:after,.cake.blown .stick:after{animation-delay:0s!important}}
   </style>
 </head>
 <body>
@@ -106,7 +119,8 @@
     const intro=document.querySelector('#intro'), cakeScene=document.querySelector('#cakeScene'), finalScene=document.querySelector('#finalScene');
     const flowers=['🌸','🌼','🌺','🌷','💐','🌻','🪷','🌹','✿','❀'];
     let audioContext, analyser, micStream, listening=false, blown=false;
-    function bloom(){
+    function bloom(button){
+      button.classList.add('opening');
       const origin=document.querySelector('.envelope-image').getBoundingClientRect();
       const cx=origin.left+origin.width/2, cy=origin.top+origin.height/2;
       for(let i=0;i<68;i++){
@@ -116,13 +130,13 @@
       }
       setTimeout(()=>{intro.classList.remove('active');cakeScene.classList.add('active')},3500);
     }
-    document.querySelector('#openLetter').addEventListener('click',e=>{if(e.currentTarget.disabled)return;e.currentTarget.disabled=true;bloom()});
-    function extinguish(){if(blown)return;blown=true;document.querySelector('#cake').classList.add('blown');document.querySelector('#status').textContent='Wish made! Every candle is out. ✨';if(micStream)micStream.getTracks().forEach(t=>t.stop());listening=false;setTimeout(()=>{document.querySelector('#wave').classList.add('go');setTimeout(()=>{cakeScene.classList.remove('active');finalScene.classList.add('active');makePetals()},520)},1400)}
+    document.querySelector('#openLetter').addEventListener('click',e=>{if(e.currentTarget.disabled)return;e.currentTarget.disabled=true;bloom(e.currentTarget)});
+    function extinguish(){if(blown)return;blown=true;const cake=document.querySelector('#cake');cake.querySelectorAll('.flame,.stick').forEach((candle,index)=>candle.style.setProperty('--delay',(index*.12)+'s'));cake.classList.add('blown');document.querySelector('#status').textContent='Wish made! Every candle is out. ✨';if(micStream)micStream.getTracks().forEach(t=>t.stop());if(audioContext)audioContext.close();listening=false;document.querySelector('#micButton').classList.remove('listening');setTimeout(()=>document.querySelector('#wave').classList.add('go'),1800);setTimeout(()=>{cakeScene.classList.remove('active');finalScene.classList.add('active');makePetals()},2320)}
     document.querySelector('#blowButton')?.addEventListener('click',extinguish);
     document.querySelector('#micButton').addEventListener('click',async()=>{
       if(blown)return;
       if(!navigator.mediaDevices?.getUserMedia){document.querySelector('#status').textContent='Microphone is unavailable here. Tap the cake to blow out the candles.';return}
-      try{micStream=await navigator.mediaDevices.getUserMedia({audio:true});audioContext=new (window.AudioContext||window.webkitAudioContext)();const source=audioContext.createMediaStreamSource(micStream);analyser=audioContext.createAnalyser();analyser.fftSize=512;source.connect(analyser);listening=true;document.querySelector('#micButton').textContent='Listening…';detectSound()}
+      try{micStream=await navigator.mediaDevices.getUserMedia({audio:true});audioContext=new (window.AudioContext||window.webkitAudioContext)();const source=audioContext.createMediaStreamSource(micStream);analyser=audioContext.createAnalyser();analyser.fftSize=512;source.connect(analyser);listening=true;document.querySelector('#micButton').textContent='Listening…';document.querySelector('#micButton').classList.add('listening');document.querySelector('#status').textContent='Listening for your wish…';detectSound()}
       catch(err){document.querySelector('#status').textContent='Microphone permission was not granted. Tap the cake to blow out the candles.'}
     });
     function detectSound(){if(!listening||blown)return;const data=new Uint8Array(analyser.fftSize);analyser.getByteTimeDomainData(data);let sum=0;for(const v of data){const x=(v-128)/128;sum+=x*x}const rms=Math.sqrt(sum/data.length);if(rms>.105){extinguish();return}requestAnimationFrame(detectSound)}
