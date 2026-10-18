@@ -43,15 +43,20 @@
     .cake-subtitle{font:1rem/1.5 system-ui,sans-serif;color:#777782;margin:0 0 25px}
     .cake{width:min(430px,82vw);aspect-ratio:1086/1448;height:auto;position:relative;margin:0 auto 8px;filter:drop-shadow(0 18px 13px #455b7620)}
     .cake-image{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-    .number-candles{position:absolute;z-index:6;bottom:70%;left:50%;transform:translateX(-50%);display:flex;gap:9px;align-items:end}
-    .num-candle{font:bold clamp(58px,13vw,82px)/1 system-ui,sans-serif;letter-spacing:-.11em;color:#c52f62;background:linear-gradient(110deg,#f57a9e 0%,#d83b70 38%,#a51c4c 78%,#e7537d 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:1px 1px 0 #ad2853,2px 2px 0 #971d48,3px 3px 0 #7e173f,4px 5px 7px #74384c70;position:relative;padding-right:8px;filter:drop-shadow(0 3px 3px #84375055)}
+    .number-candles{position:absolute;z-index:6;bottom:67%;left:50%;transform:translateX(-50%);display:flex;gap:9px;align-items:end}
+    .num-candle{display:inline-block;font:bold clamp(58px,13vw,82px)/1 system-ui,sans-serif;letter-spacing:-.11em;color:#c52f62;background:linear-gradient(110deg,#f57a9e 0%,#d83b70 38%,#a51c4c 78%,#e7537d 100%);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:1px 1px 0 #ad2853,2px 2px 0 #971d48,3px 3px 0 #7e173f,4px 5px 7px #74384c70;position:relative;z-index:1;padding:0 8px clamp(22px,6vw,32px) 0;filter:drop-shadow(0 3px 3px #84375055)}
+    .num-candle:after{content:"";position:absolute;z-index:-1;left:45%;bottom:0;width:clamp(10px,2.6vw,14px);height:clamp(22px,6vw,32px);border-radius:3px 3px 2px 2px;background:linear-gradient(90deg,#b52b56,#ee9db1 35%,#d94371 75%,#982046);box-shadow:1px 2px 3px #71334770}
     .flame{position:absolute;width:13px;height:20px;left:44%;top:-20px;background:radial-gradient(ellipse at 50% 68%,#fff2a6 0 23%,#ffb952 25% 55%,#ef7652 57% 100%);border-radius:55% 45% 55% 45%;transform:rotate(4deg);animation:flicker .8s ease-in-out infinite alternate;box-shadow:0 0 17px 5px #ffc96570}
     .flame:after,.stick:after{content:"";position:absolute;left:3px;top:-17px;width:8px;height:20px;border-radius:50%;background:linear-gradient(90deg,transparent,#b9aeb5aa,transparent);filter:blur(2px);opacity:0}
     .num-candle:nth-child(2) .flame{animation-delay:.3s}
-    .regular-candles{position:absolute;z-index:5;bottom:69%;left:50%;width:52%;height:52px;transform:translateX(-50%);display:flex;justify-content:space-between;align-items:end}
-    .candle-group{display:flex;gap:12px;align-items:end}
-    .stick{width:10px;height:45px;border-radius:4px;background:linear-gradient(90deg,#e29da4,#fff0e7 34%,#f7c4ba 68%,#bd7780);box-shadow:1px 2px 3px #72505a40;position:relative}
-    .stick:nth-child(2){height:53px}.stick:nth-child(3){height:42px}
+    .regular-candles{position:absolute;z-index:5;inset:0;pointer-events:none}
+    .stick{position:absolute;left:var(--x);bottom:var(--base);width:clamp(8px,2.4vw,10px);height:clamp(38px,12vw,53px);border-radius:4px;background:linear-gradient(90deg,#e29da4,#fff0e7 34%,#f7c4ba 68%,#bd7780);box-shadow:1px 2px 3px #72505a40}
+    .stick:nth-child(1){--x:25%;--base:71%;height:clamp(36px,10vw,45px)}
+    .stick:nth-child(2){--x:32%;--base:69%}
+    .stick:nth-child(3){--x:37%;--base:67%;height:clamp(34px,10vw,43px)}
+    .stick:nth-child(4){--x:63%;--base:67%;height:clamp(34px,10vw,43px)}
+    .stick:nth-child(5){--x:68%;--base:69%}
+    .stick:nth-child(6){--x:75%;--base:71%;height:clamp(36px,10vw,45px)}
     .stick:before{content:"";position:absolute;width:12px;height:18px;left:-1px;top:-16px;background:radial-gradient(ellipse at 50% 72%,#fffad0 0 18%,#ffcb68 38%,#f07849 72%);border-radius:52% 48% 55% 45%;filter:drop-shadow(0 0 5px #ffc968);animation:flicker .7s ease-in-out infinite alternate}
     .stick:after{left:0;top:-20px}
     @keyframes flicker{to{transform:rotate(-7deg) scale(.86);opacity:.82}}
@@ -102,7 +107,7 @@
         <div class="cake" id="cake" aria-label="A blue and white birthday cake with 55 candles">
           <img class="cake-image" src="cake.png" alt="A two-tier white and blue birthday cake">
           <div class="number-candles"><span class="num-candle">5<i class="flame"></i></span><span class="num-candle">5<i class="flame"></i></span></div>
-          <div class="regular-candles" aria-hidden="true"><span class="candle-group"><i class="stick"></i><i class="stick"></i><i class="stick"></i></span><span class="candle-group"><i class="stick"></i><i class="stick"></i><i class="stick"></i></span></div>
+          <div class="regular-candles" aria-hidden="true"><i class="stick"></i><i class="stick"></i><i class="stick"></i><i class="stick"></i><i class="stick"></i><i class="stick"></i></div>
           <div class="candle-glow"></div>
         </div>
         <div class="controls"><button class="pill primary" id="micButton">I'm ready!</button></div>
